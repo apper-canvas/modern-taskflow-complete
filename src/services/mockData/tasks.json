@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "title": "Review quarterly marketing strategy",
+    "completed": false,
+    "category": "work",
+    "dueDate": "2024-01-15T09:00:00.000Z",
+    "createdAt": "2024-01-10T08:30:00.000Z",
+    "order": 0
+  },
+  {
+    "id": "2",
+    "title": "Schedule annual health checkup",
+    "completed": false,
+    "category": "personal",
+    "dueDate": "2024-01-20T14:00:00.000Z",
+    "createdAt": "2024-01-10T10:15:00.000Z",
+    "order": 1
+  },
+  {
+    "id": "3",
+    "title": "Update portfolio website with recent projects",
+    "completed": true,
+    "category": "work",
+    "dueDate": null,
+    "createdAt": "2024-01-08T16:45:00.000Z",
+    "order": 2
+  },
+  {
+    "id": "4",
+    "title": "Research vacation destinations for summer",
+    "completed": false,
+    "category": "personal",
+    "dueDate": "2024-01-25T12:00:00.000Z",
+    "createdAt": "2024-01-09T19:20:00.000Z",
+    "order": 3
+  },
+  {
+    "id": "5",
+    "title": "Prepare presentation for team meeting",
+    "completed": false,
+    "category": "work",
+    "dueDate": "2024-01-12T15:30:00.000Z",
+    "createdAt": "2024-01-11T07:00:00.000Z",
+    "order": 4
+  },
+  {
+    "id": "6",
+    "title": "Buy groceries for the week",
+    "completed": true,
+    "category": "shopping",
+    "dueDate": null,
+    "createdAt": "2024-01-11T11:30:00.000Z",
+    "order": 5
+  },
+  {
+    "id": "7",
+    "title": "Call mom to check in",
+    "completed": false,
+    "category": "personal",
+    "dueDate": "2024-01-13T18:00:00.000Z",
+    "createdAt": "2024-01-11T13:45:00.000Z",
+    "order": 6
+  }
+]
