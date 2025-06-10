@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import React from 'react';
 
 const ProgressRing = ({ percentage, size = 120, strokeWidth = 8, completed, total }) => {
   const radius = (size - strokeWidth) / 2;
@@ -28,7 +29,7 @@ const ProgressRing = ({ percentage, size = 120, strokeWidth = 8, completed, tota
             stroke="#e5e7eb"
             strokeWidth={strokeWidth}
           />
-          
+
           {/* Progress Circle */}
           <motion.circle
             cx={size / 2}
@@ -47,7 +48,7 @@ const ProgressRing = ({ percentage, size = 120, strokeWidth = 8, completed, tota
             }}
           />
         </svg>
-        
+
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <motion.span
@@ -68,7 +69,7 @@ const ProgressRing = ({ percentage, size = 120, strokeWidth = 8, completed, tota
           </motion.span>
         </div>
       </motion.div>
-      
+
       {/* Stats */}
       <motion.div
         className="mt-4 text-center"

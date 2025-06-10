@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './pages/Home';
+import HomePage from '@/components/pages/HomePage';
 import './index.css';
 
 function App() {
@@ -9,8 +9,8 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-background">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Home />} />
+<Route path="/" element={<HomePage />} />
+          <Route path="*" element={<HomePage />} />
         </Routes>
         
         <ToastContainer

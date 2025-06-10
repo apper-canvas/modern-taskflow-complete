@@ -1,9 +1,11 @@
 import { useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { format, addDays } from 'date-fns';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
+import Input from '@/components/atoms/Input';
 
-const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
+const TaskForm = forwardRef(({ onCreateTask, categories }, ref) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -21,14 +23,14 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
     };
 
     await onCreateTask(taskData);
-    
+
     // Reset form
     setTitle('');
     setCategory('');
     setDueDate('');
     setShowOptions(false);
     setIsExpanded(false);
-    
+
     // Focus back on input
     if (ref?.current) {
       ref.current.focus();
@@ -70,7 +72,7 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
       onBlur={handleBlur}
       className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6 overflow-hidden"
       animate={{
-        boxShadow: isExpanded 
+        boxShadow: isExpanded
           ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
           : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
       }}
@@ -79,11 +81,11 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
       {/* Main Input */}
       <div className="p-6 pb-4">
         <div className="flex items-center space-x-4">
-          <ApperIcon 
-            name="Plus" 
-            className="w-5 h-5 text-gray-400 flex-shrink-0" 
+          <ApperIcon
+            name="Plus"
+            className="w-5 h-5 text-gray-400 flex-shrink-0"
           />
-          <input
+          <Input
             ref={ref}
             type="text"
             value={title}
@@ -91,22 +93,24 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             placeholder="What needs to be done?"
-            className="flex-1 text-lg placeholder-gray-500 border-none outline-none bg-transparent"
+            className="flex-1 !text-lg !placeholder-gray-500 !border-none !outline-none !bg-transparent !shadow-none" // Override default Input styling
             autoComplete="off"
           />
-          <motion.button
+          <Button
             type="button"
             onClick={() => setShowOptions(!showOptions)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            size="md" // Apply common button styling
             className={`p-2 rounded-lg transition-colors ${
               showOptions || category || dueDate
-                ? 'bg-primary text-white' 
+                ? 'bg-primary text-white'
                 : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
             }`}
+            variant="none" // Use none variant and control styling with className/style
           >
             <ApperIcon name="Settings" className="w-4 h-4" />
-          </motion.button>
+          </Button>
         </div>
       </div>
 
@@ -117,14 +121,12 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
           animate={{ opacity: 1, y: 0 }}
           className="px-6 pb-4"
         >
-          <motion.button
+          <Button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            size="full" // Use full size variant for button
           >
             Add Task
-          </motion.button>
+          </Button>
         </motion.div>
       )}
 
@@ -146,13 +148,14 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
             </label>
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
-                <motion.button
+                <Button
                   key={cat.id}
                   type="button"
                   onClick={() => setCategory(category === cat.id ? '' : cat.id)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-3 py-2 rounded-full text-sm font-medium transition-colors ${
+                  size="sm" // Small button size
+                  className={`rounded-full ${
                     category === cat.id
                       ? 'text-white shadow-sm'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -160,9 +163,10 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
                   style={{
                     backgroundColor: category === cat.id ? cat.color : undefined
                   }}
+                  variant="none"
                 >
                   {cat.name}
-                </motion.button>
+                </Button>
               ))}
             </div>
           </div>
@@ -174,46 +178,45 @@ const TaskInput = forwardRef(({ onCreateTask, categories }, ref) => {
             </label>
             <div className="flex flex-wrap gap-2 mb-3">
               {quickDateOptions.map((option) => (
-                <motion.button
+                <Button
                   key={option.label}
                   type="button"
                   onClick={() => setDueDate(dueDate === option.value ? '' : option.value)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  size="sm" // Small button size
+                  className={`${
                     dueDate === option.value
                       ? 'bg-primary text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
+                  variant="none"
                 >
                   {option.label}
-                </motion.button>
+                </Button>
               ))}
             </div>
-            <input
+            <Input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
             />
           </div>
 
           {/* Submit Button */}
-          <motion.button
+          <Button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            size="full" // Use full size variant for button
             disabled={!title.trim()}
-            className="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Add Task
-          </motion.button>
+          </Button>
         </div>
       </motion.div>
     </motion.form>
   );
 });
 
-TaskInput.displayName = 'TaskInput';
+TaskForm.displayName = 'TaskForm';
 
-export default TaskInput;
+export default TaskForm;

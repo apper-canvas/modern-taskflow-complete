@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const CompletionAnimation = ({ position, onComplete }) => {
+const CompletionConfetti = ({ position, onComplete }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
@@ -15,7 +15,7 @@ const CompletionAnimation = ({ position, onComplete }) => {
     const distance = 60 + Math.random() * 40;
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
-    
+
     return {
       id: i,
       x,
@@ -49,19 +49,19 @@ const CompletionAnimation = ({ position, onComplete }) => {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          initial={{ 
+          initial={{
             scale: 0,
             x: 0,
             y: 0,
             opacity: 1
           }}
-          animate={{ 
+          animate={{
             scale: [0, 1, 0],
             x: particle.x,
             y: particle.y,
             opacity: [0, 1, 0]
           }}
-          transition={{ 
+          transition={{
             duration: 0.8,
             delay: particle.delay,
             ease: "easeOut"
@@ -89,4 +89,4 @@ const CompletionAnimation = ({ position, onComplete }) => {
   );
 };
 
-export default CompletionAnimation;
+export default CompletionConfetti;

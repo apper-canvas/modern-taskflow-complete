@@ -1,7 +1,9 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
 
-const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) => {
+const CategoryFilterTabs = ({ categories, activeFilter, onFilterChange, tasks }) => {
   const getTaskCount = (filterId) => {
     switch (filterId) {
       case 'all':
@@ -12,9 +14,9 @@ const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) =>
         return tasks.filter(task => !task.completed).length;
       case 'overdue':
         const now = new Date();
-        return tasks.filter(task => 
-          !task.completed && 
-          task.dueDate && 
+        return tasks.filter(task =>
+          !task.completed &&
+          task.dueDate &&
           new Date(task.dueDate) < now
         ).length;
       default:
@@ -26,7 +28,7 @@ const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) =>
     { id: 'all', name: 'All Tasks', icon: 'List' },
     { id: 'pending', name: 'Pending', icon: 'Clock' },
     { id: 'completed', name: 'Completed', icon: 'CheckCircle' },
-    { id: 'overdue', name: 'Overdue', icon: 'AlertCircle' }
+    { id: 'overdue', name: 'AlertCircle', icon: 'AlertCircle' } // Icon for overdue is AlertCircle
   ];
 
   const allFilters = [
@@ -44,16 +46,16 @@ const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) =>
       {allFilters.map((filter, index) => {
         const taskCount = getTaskCount(filter.id);
         const isActive = activeFilter === filter.id;
-        
+
         return (
-          <motion.button
+          <Button
             key={filter.id}
             onClick={() => onFilterChange(filter.id)}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            size="md" // Apply common button styling
             className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
               isActive
                 ? 'text-white shadow-sm'
@@ -62,10 +64,11 @@ const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) =>
             style={{
               backgroundColor: isActive ? (filter.color || '#5B4FE9') : undefined
             }}
+            variant="none" // Use none variant and control styling with className/style
           >
-            <ApperIcon 
-              name={filter.icon} 
-              className="w-4 h-4" 
+            <ApperIcon
+              name={filter.icon}
+              className="w-4 h-4"
             />
             <span>{filter.name}</span>
             {taskCount > 0 && (
@@ -81,11 +84,11 @@ const CategoryFilters = ({ categories, activeFilter, onFilterChange, tasks }) =>
                 {taskCount}
               </motion.span>
             )}
-          </motion.button>
+          </Button>
         );
       })}
     </div>
   );
 };
 
-export default CategoryFilters;
+export default CategoryFilterTabs;

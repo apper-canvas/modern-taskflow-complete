@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Input from '@/components/atoms/Input';
+import IconButton from '@/components/atoms/IconButton';
+import Kbd from '@/components/atoms/Kbd';
 
 const SearchBar = ({ value, onChange, placeholder = "Search tasks..." }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,29 +27,29 @@ const SearchBar = ({ value, onChange, placeholder = "Search tasks..." }) => {
         isFocused ? 'border-primary shadow-lg' : 'border-gray-200'
       }`}
       animate={{
-        boxShadow: isFocused 
+        boxShadow: isFocused
           ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
           : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
       }}
     >
       <div className="flex items-center px-4 py-3">
-        <ApperIcon 
-          name="Search" 
+        <ApperIcon
+          name="Search"
           className={`w-5 h-5 transition-colors ${
             isFocused ? 'text-primary' : 'text-gray-400'
-          }`} 
+          }`}
         />
-        <input
+        <Input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
-          className="search-input flex-1 ml-3 bg-transparent border-none outline-none text-gray-900 placeholder-gray-500"
+          className="search-input flex-1 ml-3 !bg-transparent !border-none !outline-none" // Override default Input styling
           autoComplete="off"
         />
-        
+
         {/* Keyboard shortcut hint */}
         {!isFocused && !value && (
           <motion.div
@@ -55,26 +58,25 @@ const SearchBar = ({ value, onChange, placeholder = "Search tasks..." }) => {
             transition={{ delay: 0.5 }}
             className="flex items-center space-x-1 text-xs text-gray-400"
           >
-            <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">
+            <Kbd>
               {navigator.platform.toLowerCase().includes('mac') ? '⌘' : 'Ctrl'}
-            </kbd>
-            <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">K</kbd>
+            </Kbd>
+            <Kbd>K</Kbd>
           </motion.div>
         )}
-        
+
         {/* Clear button */}
         {value && (
-          <motion.button
+          <IconButton
+            icon="X"
+            onClick={() => onChange('')}
+            className="ml-2"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            onClick={() => onChange('')}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="ml-2 p-1 text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <ApperIcon name="X" className="w-4 h-4" />
-          </motion.button>
+          />
         )}
       </div>
     </motion.div>
